@@ -1,0 +1,59 @@
+# OSX
+#
+mobile-app/.DS_Store
+
+# Xcode
+#
+mobile-app/build/
+mobile-app/*.pbxuser
+mobile-app/!default.pbxuser
+mobile-app/*.mode1v3
+mobile-app/!default.mode1v3
+mobile-app/*.mode2v3
+mobile-app/!default.mode2v3
+mobile-app/*.perspectivev3
+mobile-app/!default.perspectivev3
+mobile-app/xcuserdata
+mobile-app/*.xccheckout
+mobile-app/*.moved-aside
+mobile-app/DerivedData
+mobile-app/*.hmap
+mobile-app/*.ipa
+mobile-app/*.xcuserstate
+mobile-app/project.xcworkspace
+
+# Android/IntelliJ
+#
+mobile-app/build/
+mobile-app/.idea
+mobile-app/.gradle
+mobile-app/local.properties
+mobile-app/*.iml
+
+# node.js
+#
+mobile-app/node_modules/
+mobile-app/npm-debug.log
+mobile-app/yarn-error.log
+
+# BUCK
+mobile-app/buck-out/
+mobile-app/\.buckd/
+mobile-app/*.keystore
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
+
+mobile-app/fastlane/report.xml
+mobile-app/fastlane/Preview.html
+mobile-app/fastlane/screenshots
+
+# node.js
+#
+services-app/node_modules/
+services-app/npm-debug.log
+services-app/yarn-error.log
