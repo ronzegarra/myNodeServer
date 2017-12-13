@@ -99,6 +99,7 @@ app.post('/api/users', function(req, res) {
 				console.log(result);
 				console.log('Yo have already an account');
 				res.send('EXISTING USER');
+				//res.json({});
 				return;
 			}
 			/*Verify if the user does not exist yet in the user*/
@@ -201,3 +202,117 @@ app.post('/api/visits', function(req, res) {
 	});
 });
 
+app.get('/api/visits', function(req, res) {
+	//console.log('***************');
+	Visit.find(function(err, rows) {
+			if (err) {
+					res.send(err);
+					console.log('Problem with MongoDB' + err);
+			}
+			res.json(rows);
+	});
+});
+
+/*
+app.get('/api/searchVisit', function(req, res) {
+	//console.log('***************');
+	Visit.find(function(err, rows) {
+			if (err) {
+					res.send(err);
+					console.log('Problem with MongoDB' + err);
+			}
+			res.json(rows);
+	});
+});
+*/
+
+app.get('/api/searchVisit/Filter', function(req, res) {
+	
+	console.log('Filter+ +++');
+
+	console.log(req.query.searchVisitData);
+
+	var filter = JSON.parse(req.query.searchVisitData);
+
+	console.log(filter);
+	
+	//console.log()
+
+	var request = {};
+
+	if(filter.user !== ''){
+		request['user.user'] = filter.user;
+	}
+
+	if(filter.rut !== ''){
+		request['rut'] = filter.rut;
+	}
+
+	if(filter.description !== ''){
+		request['description'] = filter.description;
+	}
+
+	if(filter.optionResultSelected !== ''){
+		request['optionResultSelected'] = filter.optionResultSelected;
+	}
+	
+	if(filter.optionSaleSelected !== ''){
+		request['optionSaleSelected'] = filter.optionSaleSelected;
+	}
+
+	if(filter.startDate !== '31/12/1969'){
+		request['user.date'] = filter.startDate;
+		
+	}
+
+
+	console.log('???????????');
+	console.log(request);
+
+
+	Visit.find( request  ,function(err, rows) {
+		if (err) {
+				res.send(err);
+				console.log('Problem with MongoDB' + err);
+		}
+		console.log('rowssss');
+		console.log(rows)
+		res.json(rows);
+	});
+
+	
+	//console.log(req);
+
+	//var filter = JSON.parse(req.params.Filter);
+
+	//console.log(JSON.parse(req.params.Filter));
+
+	//console.log(filter);
+
+	//console.log(req.params.body);
+
+	/*var filter = JSON.parse(req.params.Filter);
+	
+	console.log(filter);
+	*/
+
+	//console.log(req);
+	//console.log(req.params.Filter);
+	
+	/*var filter = JSON.parse(req.params.Filter);
+	console.log(filter);*/
+	
+
+/*
+	Visit.find(function(err, rows) {
+			if (err) {
+					res.send(err);
+					console.log('Problem with MongoDB' + err);
+			}
+			res.json(rows);
+	});
+
+	*/
+
+
+});
