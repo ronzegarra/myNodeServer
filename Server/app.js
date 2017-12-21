@@ -19,7 +19,6 @@ app.use(
 	})
 );
 app.use(bodyParser.json());
-//app.use(express.static(__dirname + '/../www'));
 
 app.use(function(req, res, next) {
 	// Website you wish to allow to connect
@@ -70,7 +69,6 @@ var visitSchema = mongoose.Schema({
 });
 
 //Models
-
 var AuthUser = mongoose.model('AuthUser', authSchema, 'authUsers');
 var User = mongoose.model('User', userSchema, 'users');
 var Visit = mongoose.model('Visit', visitSchema, 'visits');
@@ -121,7 +119,7 @@ app.post('/api/users', function(req, res) {
 							if (err) {
 								res.send(err);
 							} else {
-								console.log('Creating new auth user ...+++');
+								console.log('Creating new auth user ...');
 								authUser.save(function(err, result) {
 									if (err) {
 										res.send(err);
@@ -160,7 +158,6 @@ app.post('/api/users', function(req, res) {
 });
 
 app.post('/api/visits', function(req, res) {
-	console.log(req.body);
 
 	var a = req.body;
 	var user = a.user;
@@ -170,10 +167,10 @@ app.post('/api/visits', function(req, res) {
 			res.send(err);
 			return;
 		} else if (u) {
-			//If the user exists in DB we use his _id to create the advert
+			//If the user exists in DB we use his _id to create the visit
 			a.user._id = u._id;
 		} else {
-			// If not we create that user and use his _id to create the advert
+			// If not we create that user and use his _id to create the visit
 			var userD = new User(user);
 			console.log(userD);
 			userD.save(function(err, response) {
@@ -181,10 +178,10 @@ app.post('/api/visits', function(req, res) {
 			});
 			if (err) return;
 
-			a.user._id = userD._id; //Use that new user _id to create advert
+			a.user._id = userD._id; //Use that new user _id to create visit
 		}
 
-		var visit = new Visit(a); //Create the advert
+		var visit = new Visit(a); //Create the visit
 		visit.save(function(err, response) {
 			//Save it
 			if (err) res.send(err);
@@ -203,19 +200,7 @@ app.post('/api/visits', function(req, res) {
 });
 
 app.get('/api/visits', function(req, res) {
-	//console.log('***************');
-	Visit.find(function(err, rows) {
-			if (err) {
-					res.send(err);
-					console.log('Problem with MongoDB' + err);
-			}
-			res.json(rows);
-	});
-});
 
-/*
-app.get('/api/searchVisit', function(req, res) {
-	//console.log('***************');
 	Visit.find(function(err, rows) {
 			if (err) {
 					res.send(err);
@@ -224,20 +209,13 @@ app.get('/api/searchVisit', function(req, res) {
 			res.json(rows);
 	});
 });
-*/
 
 app.get('/api/searchVisit/Filter', function(req, res) {
 	
-	console.log('Filter+ +++');
-
-	console.log(req.query.searchVisitData);
-
 	var filter = JSON.parse(req.query.searchVisitData);
 
 	console.log(filter);
 	
-	//console.log()
-
 	var request = {};
 
 	if(filter.user !== ''){
@@ -265,54 +243,12 @@ app.get('/api/searchVisit/Filter', function(req, res) {
 		
 	}
 
-
-	console.log('???????????');
-	console.log(request);
-
-
 	Visit.find( request  ,function(err, rows) {
 		if (err) {
 				res.send(err);
 				console.log('Problem with MongoDB' + err);
 		}
-		console.log('rowssss');
-		console.log(rows)
 		res.json(rows);
 	});
-
-	
-	//console.log(req);
-
-	//var filter = JSON.parse(req.params.Filter);
-
-	//console.log(JSON.parse(req.params.Filter));
-
-	//console.log(filter);
-
-	//console.log(req.params.body);
-
-	/*var filter = JSON.parse(req.params.Filter);
-	
-	console.log(filter);
-	*/
-
-	//console.log(req);
-	//console.log(req.params.Filter);
-	
-	/*var filter = JSON.parse(req.params.Filter);
-	console.log(filter);*/
-	
-
-/*
-	Visit.find(function(err, rows) {
-			if (err) {
-					res.send(err);
-					console.log('Problem with MongoDB' + err);
-			}
-			res.json(rows);
-	});
-
-	*/
-
 
 });
